@@ -1,0 +1,372 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --primary-color: #2c3e50;
+    --secondary-color: #3498db;
+    --light-color: #ecf0f1;
+    --dark-color: #34495e;
+    --white-square: #f0d9b5;
+    --black-square: #b58863;
+    --highlight-color: #baca44;
+    --selected-color: #7fc97f;
+    --danger-color: #e74c3c;
+    --success-color: #27ae60;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.container {
+    max-width: 1400px;
+    width: 100%;
+}
+
+header {
+    text-align: center;
+    color: white;
+    margin-bottom: 40px;
+    animation: slideDown 0.6s ease-out;
+}
+
+header h1 {
+    font-size: 3.5rem;
+    margin-bottom: 10px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    letter-spacing: 2px;
+}
+
+.subtitle {
+    font-size: 1.2rem;
+    opacity: 0.9;
+}
+
+.game-wrapper {
+    display: flex;
+    gap: 30px;
+    margin-bottom: 40px;
+    animation: slideUp 0.6s ease-out;
+}
+
+.sidebar {
+    flex: 0 0 250px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.game-info,
+.moves-history {
+    background: white;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+.game-info h2,
+.moves-history h3 {
+    color: var(--primary-color);
+    margin-bottom: 15px;
+    font-size: 1.3rem;
+    border-bottom: 2px solid var(--secondary-color);
+    padding-bottom: 10px;
+}
+
+.info-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--light-color);
+    font-size: 0.95rem;
+}
+
+.info-item:last-child {
+    border-bottom: none;
+}
+
+.label {
+    color: var(--dark-color);
+    font-weight: 600;
+}
+
+.value {
+    color: var(--secondary-color);
+    font-weight: bold;
+}
+
+.moves-list {
+    max-height: 300px;
+    overflow-y: auto;
+    font-size: 0.9rem;
+}
+
+.move-item {
+    padding: 8px;
+    margin: 5px 0;
+    background: var(--light-color);
+    border-left: 3px solid var(--secondary-color);
+    border-radius: 4px;
+    font-family: 'Courier New', monospace;
+}
+
+.move-item.bot-move {
+    border-left-color: var(--danger-color);
+}
+
+.controls {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.btn {
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.btn-primary {
+    background: var(--secondary-color);
+    color: white;
+}
+
+.btn-primary:hover {
+    background: #2980b9;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(52, 152, 219, 0.4);
+}
+
+.btn-secondary {
+    background: var(--light-color);
+    color: var(--primary-color);
+    border: 2px solid var(--secondary-color);
+}
+
+.btn-secondary:hover {
+    background: var(--secondary-color);
+    color: white;
+    transform: translateY(-2px);
+}
+
+.btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.board-container {
+    position: relative;
+    width: 800px;
+    height: 800px;
+    margin: 0 auto;
+}
+
+.board {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    grid-template-rows: repeat(8, 1fr);
+    gap: 0;
+    background: #8b7355;
+    border: 3px solid var(--primary-color);
+    border-radius: 8px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+}
+
+.square {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    font-size: 3.5rem;
+    transition: all 0.2s ease;
+    position: relative;
+    user-select: none;
+}
+
+.square.white {
+    background-color: var(--white-square);
+}
+
+.square.black {
+    background-color: var(--black-square);
+}
+
+.square.highlight {
+    background-color: var(--highlight-color);
+    box-shadow: inset 0 0 0 2px rgba(0, 0, 0, 0.3);
+}
+
+.square.selected {
+    background-color: var(--selected-color);
+    box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.2);
+}
+
+.square.valid-move {
+    position: relative;
+}
+
+.square.valid-move::before {
+    content: '';
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background-color: var(--highlight-color);
+    border-radius: 50%;
+    opacity: 0.8;
+}
+
+.square.valid-move.has-piece::before {
+    width: 30px;
+    height: 30px;
+    border: 3px solid var(--highlight-color);
+    background: transparent;
+}
+
+.piece {
+    cursor: grab;
+    transition: transform 0.15s ease;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+}
+
+.piece:hover {
+    transform: scale(1.1);
+}
+
+.piece:active {
+    cursor: grabbing;
+}
+
+.square.last-move {
+    background-color: rgba(191, 202, 68, 0.4);
+}
+
+.coordinates {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    font-weight: bold;
+    color: var(--dark-color);
+    font-size: 0.9rem;
+}
+
+.files {
+    position: absolute;
+    bottom: 5px;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+}
+
+.ranks {
+    position: absolute;
+    left: 5px;
+    top: 0;
+    height: 100%;
+    display: flex;
+    flex-direction: column-reverse;
+    justify-content: space-around;
+}
+
+footer {
+    text-align: center;
+    color: white;
+    margin-top: 40px;
+    font-size: 0.95rem;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+    .game-wrapper {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .sidebar {
+        flex: none;
+        width: 100%;
+    }
+
+    .board-container {
+        width: 100%;
+        height: auto;
+        aspect-ratio: 1;
+    }
+}
+
+@media (max-width: 900px) {
+    header h1 {
+        font-size: 2.5rem;
+    }
+
+    .board-container {
+        max-width: 600px;
+        margin: 0 auto;
+    }
+
+    .square {
+        font-size: 2.5rem;
+    }
+}
+
+/* Scrollbar Styling */
+.moves-list::-webkit-scrollbar {
+    width: 6px;
+}
+
+.moves-list::-webkit-scrollbar-track {
+    background: var(--light-color);
+    border-radius: 3px;
+}
+
+.moves-list::-webkit-scrollbar-thumb {
+    background: var(--secondary-color);
+    border-radius: 3px;
+}
+
+.moves-list::-webkit-scrollbar-thumb:hover {
+    background: var(--dark-color);
+}

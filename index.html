@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chess - Play Against Bot</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>♟️ Chess Game ♟️</h1>
+            <p class="subtitle">Play Against an 800 ELO Bot</p>
+        </header>
+
+        <div class="game-wrapper">
+            <div class="sidebar">
+                <div class="game-info">
+                    <h2>Game Info</h2>
+                    <div class="info-item">
+                        <span class="label">Your Color:</span>
+                        <span class="value" id="playerColor">White</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="label">Status:</span>
+                        <span class="value" id="gameStatus">Your Turn</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="label">Moves:</span>
+                        <span class="value" id="moveCount">0</span>
+                    </div>
+                </div>
+
+                <div class="moves-history">
+                    <h3>Move History</h3>
+                    <div id="movesList" class="moves-list"></div>
+                </div>
+
+                <div class="controls">
+                    <button id="resetBtn" class="btn btn-primary">New Game</button>
+                    <button id="undoBtn" class="btn btn-secondary">Undo Move</button>
+                    <button id="hintsBtn" class="btn btn-secondary">Get Hint</button>
+                </div>
+            </div>
+
+            <div class="board-container">
+                <div id="board" class="board"></div>
+                <div class="coordinates">
+                    <div class="files">
+                        <span>a</span><span>b</span><span>c</span><span>d</span>
+                        <span>e</span><span>f</span><span>g</span><span>h</span>
+                    </div>
+                    <div class="ranks">
+                        <span>8</span><span>7</span><span>6</span><span>5</span>
+                        <span>4</span><span>3</span><span>2</span><span>1</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p>Made with ♥️ | Chess Bot v1.0</p>
+        </footer>
+    </div>
+
+    <script src="chess-logic.js"></script>
+    <script src="bot-engine.js"></script>
+    <script src="ui.js"></script>
+</body>
+</html>
